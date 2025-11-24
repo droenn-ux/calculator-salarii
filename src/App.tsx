@@ -210,6 +210,8 @@ const [toast, setToast] = useState<{ msg: string; visible: boolean }>({
 });
 const { theme, setTheme } = useThemeMode();
 const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+const [cookieConsent, setCookieConsent] = useState<"unknown" | "accepted" | "rejected">("unknown");
+
 
 useEffect(() => {
   const m = getParam("mode");
@@ -251,6 +253,19 @@ useEffect(() => {
   };
   window.addEventListener("keydown", onKey);
   return () => window.removeEventListener("keydown", onKey);
+}, []);
+
+useEffect(() => {
+  const saved = localStorage.getItem("cookie_consent");
+  if (saved === "accepted") {
+    setCookieConsent("accepted");
+    // încarcă GA4 direct
+    import("./analytics").then(mod => mod.loadGA4());
+  } else if (saved === "rejected") {
+    setCookieConsent("rejected");
+  } else {
+    setCookieConsent("unknown");
+  }
 }, []);
 
 
@@ -667,6 +682,42 @@ function getParam(name: string) {
     {toast.msg}
   </div>
 )}
+{cookieConsent === "unknown" && (
+  <div className="fixed bottom-4 left-1/2 -translate-x-1/2 max-w-lg w-[95%] 
+                  rounded-2xl bg-slate-900 text-slate-50 px-4 py-3 
+                  shadow-xl border border-slate-700 text-sm flex flex-col gap-2
+                  md:flex-row md:items-center md:gap-3 z-50">
+    <div className="flex-1">
+      Folosim cookie-uri pentru a analiza traficul (Google Analytics 4).
+      Poți folosi site-ul și fără să accepți analiza.
+    </div>
+    <div className="flex gap-2 justify-end mt-2 md:mt-0">
+      <button
+        className="px-3 py-1.5 rounded-xl border border-slate-600 
+                   bg-slate-800 hover:bg-slate-700 text-xs"
+        onClick={() => {
+          localStorage.setItem("cookie_consent", "rejected");
+          setCookieConsent("rejected");
+        }}
+      >
+        Refuz
+      </button>
+      <button
+        className="px-3 py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 
+                   text-xs font-semibold text-slate-900 rounded-xl"
+        onClick={async () => {
+          localStorage.setItem("cookie_consent", "accepted");
+          setCookieConsent("accepted");
+          const mod = await import("./analytics");
+          mod.loadGA4();
+        }}
+      >
+        Accept
+      </button>
+    </div>
+  </div>
+)}
+
     </div>
   );
 }

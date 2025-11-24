@@ -1,13 +1,51 @@
 <!doctype html>
-<html lang="en">
+<html lang="ro">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>calculator-salarii</title>
+
+    <!-- SEO -->
+    <meta name="description" content="Calculează rapid salariul net din brut sau brut din net. Deduceri automate, contribuții CAS/CASS, impozit, cost angajator și zile lucrătoare. Calculator salarii 2025 actualizat.">
+    <meta property="og:title" content="Calculator Salarii 2025 – Paycheck.ro">
+    <meta property="og:description" content="Cel mai rapid și modern calculator de salarii din România. Actualizat 2025.">
+    <meta property="og:url" content="https://paycheck.ro">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://paycheck.ro/preview.jpg">
+    <link rel="canonical" href="https://paycheck.ro" />
+
+    <title>Calculator salarii 2025 – Brut în Net • Net în Brut • Paycheck.ro</title>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-X025466267"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-X025466267');
+    </script>
+
+    <!-- JSON-LD (ok să rămână în index sursă) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Calculator salarii 2025",
+      "url": "https://paycheck.ro",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "All",
+      "description": "Calculează salariul net din brut și brut din net. Deducere personală automată, contribuții CAS/CASS, impozit pe venit și cost angajator.",
+      "author": {
+        "@type": "Organization",
+        "name": "Paycheck.ro"
+      }
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>
+
+    <!-- AICI e diferența importantă: pentru dezvoltare/build -->
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
